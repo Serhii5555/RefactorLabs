@@ -1,10 +1,12 @@
-﻿using mkr_1.Enums;
+﻿using mkr_1.Commands;
+using mkr_1.Enums;
 using mkr_1.Nodes;
 
 public class Program
 {
     public static void Main()
     {
+        // task1
         var ul = new LoggingElementNode("ul", DisplayType.Block, TagType.Paired);
         ul.AddCssClass("list");
 
@@ -16,6 +18,7 @@ public class Program
 
         Console.WriteLine(ul.OuterHTML);
 
+        // task2
         for (int i = 1; i <= 3; i++)
         {
             var text = new LightTextNode($"Item {i}");
@@ -36,5 +39,18 @@ public class Program
         {
             Console.WriteLine($" - {node.GetType().Name}");
         }
+
+        // task3
+        var textNode = new LightTextNode("Old Text");
+        li.Children.Add(textNode);
+
+        var addClass = new AddClassCommand(li, "highlighted");
+        var changeText = new ReplaceTextCommand(textNode, "New Text");
+
+        addClass.Execute();
+        changeText.Execute();
+
+        Console.WriteLine(li.OuterHTML); 
+
     }
 }
