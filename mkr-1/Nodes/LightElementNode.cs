@@ -78,6 +78,15 @@ namespace mkr_1.Nodes
                 return $"<{TagName}{classAttribute}>{InnerHTML}</{TagName}>";
             }
         }
+
+        public override void Accept(ILightNodeVisitor visitor)
+        {
+            visitor.VisitElement(this);
+            foreach (var child in Children)
+            {
+                child.Accept(visitor);
+            }
+        }
     }
 
 }

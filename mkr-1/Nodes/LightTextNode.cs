@@ -1,4 +1,6 @@
-﻿namespace mkr_1.Nodes
+﻿using mkr_1.Interfaces;
+
+namespace mkr_1.Nodes
 {
     public class LightTextNode : LightNode
     {
@@ -24,6 +26,11 @@
         }
 
         public override string InnerHTML => OuterHTML;
+
+        public override void Accept(ILightNodeVisitor visitor)
+        {
+            visitor.VisitText(this);
+        }
     }
 
 }
