@@ -2,11 +2,14 @@
 using mkr_1.Enums;
 using mkr_1.Nodes;
 using mkr_1.States;
+using mkr_1.Visitors;
+using System.Text;
 
 public class Program
 {
     public static void Main()
     {
+        Console.OutputEncoding = Encoding.UTF8;
         // task1
         var ul = new LoggingElementNode("ul", DisplayType.Block, TagType.Paired);
         ul.AddCssClass("list");
@@ -69,5 +72,22 @@ public class Program
         Console.WriteLine("\nDisabled:");
         Console.WriteLine(div.OuterHTML);
 
+        // task5
+        div.AddCssClass("main");
+
+        var span = new LightElementNode("span", DisplayType.Inline, TagType.Paired);
+        span.AddCssClass("highlight");
+        span.Children.Add(new LightTextNode("Hello!"));
+
+        div.Children.Add(span);
+
+        var collector = new CssClassCollector();
+        div.Accept(collector);
+
+        Console.WriteLine("CSS класи в дереві:");
+        foreach (var cls in collector.Classes)
+        {
+            Console.WriteLine($" - {cls}");
+        }
     }
 }

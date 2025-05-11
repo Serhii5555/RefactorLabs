@@ -1,4 +1,6 @@
-﻿namespace mkr_1.Nodes
+﻿using mkr_1.Interfaces;
+
+namespace mkr_1.Nodes
 {
     public abstract class LightNode
     {
@@ -10,5 +12,7 @@
 
         public abstract string OuterHTML { get; }
         public abstract string InnerHTML { get; }
+
+        public abstract void Accept(ILightNodeVisitor visitor);
     }
 }
