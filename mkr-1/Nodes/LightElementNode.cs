@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using mkr_1.Enums;
+using mkr_1.Interfaces;
+using mkr_1.States;
 
 namespace mkr_1.Nodes
 {
@@ -55,23 +57,27 @@ namespace mkr_1.Nodes
             }
         }
 
-        public override string OuterHTML
+        private IElementState state = new VisibleState(); 
+
+        public void SetState(IElementState newState)
         {
-            get
-            {
-                var classAttribute = CssClasses.Count > 0 ? $" class=\"{string.Join(" ", CssClasses)}\"" : "";
-                if (TagClosingType == TagType.Single)
-                {
-                    return $"<{TagName}{classAttribute}/>";
-                }
-                else
-                {
-                    return $"<{TagName}{classAttribute}>{InnerHTML}</{TagName}>";
-                }
-            }
+            state = newState;
         }
 
-        public int ChildrenCount => Children.Count;
+        public override string OuterHTML => state.Render(this);
+
+        public string RenderAsHtml()
+        {
+            var classAttribute = CssClasses.Count > 0 ? $" class=\"{string.Join(" ", CssClasses)}\"" : "";
+            if (TagClosingType == TagType.Single)
+            {
+                return $"<{TagName}{classAttribute}/>";
+            }
+            else
+            {
+                return $"<{TagName}{classAttribute}>{InnerHTML}</{TagName}>";
+            }
+        }
     }
 
 }
