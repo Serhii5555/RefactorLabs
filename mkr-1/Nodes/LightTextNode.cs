@@ -9,11 +9,16 @@
             OnCreated();
         }
 
+        public void SetText(string newText)
+        {
+            text = newText;
+        }
+
         public override string OuterHTML
         {
             get
             {
-                OnTextRendered(); 
+                OnTextRendered();   
                 return text;
             }
         }
