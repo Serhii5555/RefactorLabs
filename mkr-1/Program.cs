@@ -1,6 +1,7 @@
 ﻿using mkr_1.Commands;
 using mkr_1.Enums;
 using mkr_1.Nodes;
+using mkr_1.States;
 
 public class Program
 {
@@ -50,7 +51,23 @@ public class Program
         addClass.Execute();
         changeText.Execute();
 
-        Console.WriteLine(li.OuterHTML); 
+        Console.WriteLine(li.OuterHTML);
+
+        //task4
+        var div = new LightElementNode("div", DisplayType.Block, TagType.Paired);
+        div.AddCssClass("box");
+        div.Children.Add(new LightTextNode("Hello!"));
+
+        Console.WriteLine("Default (Visible):");
+        Console.WriteLine(div.OuterHTML);
+
+        div.SetState(new HiddenState());
+        Console.WriteLine("\nHidden:");
+        Console.WriteLine(div.OuterHTML);
+
+        div.SetState(new DisabledState());
+        Console.WriteLine("\nDisabled:");
+        Console.WriteLine(div.OuterHTML);
 
     }
 }
